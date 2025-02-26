@@ -17,6 +17,8 @@ module.exports.create = (req, res, next) => {
               // }
 
               req.session.userId = user.id;
+              console.log('Setting session userId:', req.session.userId);
+              //req.session.save()
               res.status(201).json(user);
             } else {
               next(createError(401, {

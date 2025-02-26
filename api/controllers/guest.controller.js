@@ -1,29 +1,34 @@
 const createError = require("http-errors");
-const User = require("../models/user.model");
+const Guest = require("../models/guest.model");
 
 module.exports.create = (req, res, next) => {
   const { email } = req.body;
 
-  User.findOne({ email })
-    .then((user) => {
-      if (user) {
+  Guest.findOne({ email })
+    .then((guest) => {
+      if (guest) {
         next(
           createError(400, {
-            message: "User email already taken",
+            message: "Guest email already taken",
             errors: { email: "Already exists" },
           })
         );
       } else {
-        return User.create({
+        return Guest.create({
           email: req.body.email,
-          password: req.body.password,
           name: req.body.name,
-          avatar: req.file?.path,
-        }).then((user) => {
+          companyName: req.body.companyName,
+          telephone: req.body.telephone,
+          dni: req.body.dni,
+          nie: req.body.nie,
+          passport: req.body.passport,
+          gender: req.body.gender,
+          observation: req.body.observation,
+        }).then((guest) => {
           // sendValidationEmail(user);
           //req.session.userId = user._id
 
-          res.status(201).json(user);
+          res.status(201).json(guest);
         });
       }
     })
@@ -33,9 +38,14 @@ module.exports.create = (req, res, next) => {
 module.exports.update = (req, res, next) => {
   const permittedBody = {
     email: req.body.email,
-    password: req.body.password,
     name: req.body.name,
-    avatar: req.body.avatar,
+    companyName: req.body.companyName,
+    telephone: req.body.telephone,
+    dni: req.body.dni,
+    nie: req.body.nie,
+    passport: req.body.passport,
+    gender: req.body.gender,
+    observation: req.body.observation,
   };
 
   // remove undefined keys
@@ -46,33 +56,29 @@ module.exports.update = (req, res, next) => {
   });
 
   // merge body into req.user object
-  Object.assign(req.user, permittedBody);
+  Object.assign(req.guest, permittedBody);
 
-  req.user
+  req.guest
     .save()
-    .then((user) => res.json(user))
-    .catch(next);
-};
-
-module.exports.validate = (req, res, next) => {
-  User.findOne({ _id: req.params.id, activateToken: req.query.token })
-    .then((user) => {
-      if (user) {
-        user.active = true;
-        user.save().then((user) => res.json(user));
-      } else {
-        next(createError(404, "User not found"));
-      }
-    })
+    .then((guest) => res.json(guest))
     .catch(next);
 };
 
 module.exports.profile = (req, res, next) => {
-  res.json(req.user);
+  res.json(req.guest);
 };
 
 module.exports.list = (req, res, next) => {
-  const { limit = 10, page = 0, sort = "name", role, active } = req.query;
+  const {
+    limit = 10,
+    page = 0,
+    sort = "name",
+    companyName,
+    telephone,
+    dni,
+    nie,
+    passport,
+  } = req.query;
 
   if (Number.isNaN(Number(limit)) || Number(limit) <= 0) {
     return next(
@@ -92,22 +98,25 @@ module.exports.list = (req, res, next) => {
   }
 
   const criterial = {};
-  if (role) criterial["role"] = role;
-  if (active) criterial["active"] = active;
+  if (companyName) criterial["companyName"] = companyName;
+  if (telephone) criterial["telephone"] = telephone;
+  if (dni) criterial["dni"] = dni;
+  if (nie) criterial["nie"] = nie;
+  if (passport) criterial["passport"] = passport;
 
-  User.find(criterial)
+  Guest.find(criterial)
     .sort({ [sort]: "asc" })
     .limit(limit)
     .skip(limit * page)
-    .then((users) => res.json(users))
+    .then((guest) => res.json(guest))
     .catch((error) => next(error));
 };
 
 module.exports.delete = (req, res, next) => {
   const { email } = req.body;
-  User.findOneAndDelete({ email })
+  Guest.findOneAndDelete({ email })
     .then((user) => {
-      res.status(200).json({ message: "User deleted successfully" });
+      res.status(200).json({ message: "Guest deleted successfully" });
     })
     .catch((error) => next(error));
 };
