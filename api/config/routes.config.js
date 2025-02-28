@@ -5,9 +5,13 @@ const createError = require("http-errors");
 
 const auth = require("../middlewares/session.middleware");
 const guestMiddleware = require("../middlewares/guest.middleware");
+const attendanceMiddleware = require("../middlewares/attendance.middleware")
+const eventMiddleware = require("../middlewares/event.middleware");
 
 const users = require("../controllers/users.controller");
 const guest = require("../controllers/guest.controller");
+////const participants = require("../controllers/participants.controller")
+const attendances = require("../controllers/attendances.controller")
 const sessions = require("../controllers/sessions.controller");
 const events = require("../controllers/events.controller");
 
@@ -23,8 +27,11 @@ router.post("/sessions", sessions.create);
 router.delete("/sessions", sessions.destroy);
 
 // Event Routes
+router.param("eventId", eventMiddleware.loadEvent)
+
 router.post("/events", events.create);
 router.get("/events", events.list);
+router.get("/events/:eventId", events.detail)
 
 // Guest Routes
 router.param("guestId", guestMiddleware.loadGuest);
@@ -32,24 +39,20 @@ router.param("guestId", guestMiddleware.loadGuest);
 router.post("/guests", guest.create);
 router.get("/guests", guest.list);
 router.get("/guests/:guestId", guest.profile);
-// router.patch("/guests/:id", guest.update)
-// router.delete("/guests/:id", guest.delete)
-
-//Participant Routes
-//router.post("/participants", participants.create);
-//router.get("/participants", participants.list);
-//router.get("/participants/:participantsId", participants.profile);
-// router.patch("/participants/:id", participants.update)
-// router.delete("/participants/:id", participants.delete)
+router.patch("/guests/:guestId", guest.update)
+router.delete("/guests/:guestId", guest.delete)
 
 //Attendance Routes
-//router.post("/participants", participants.create);
-//router.get("/participants", participants.list);
-//router.get("/participants/:participantsId", participants.profile);
-// router.patch("/participants/:id", participants.update)
-// router.delete("/participants/:id", participants.delete)
+router.param("attendanceId", attendanceMiddleware.loadAttendance)
+
+router.post("/attendances", attendances.create);
+router.get("/attendances", attendances.list);
+//router.get("/attendances/:attendancesId", attendances.profile);
+router.patch("/attendances/:attendanceId", attendances.update)
+// router.delete("/attendances/:id", attendances.delete)
 
 //Attendance for a particular evet
+//router.get("/events/:eventId/attendance", )
 
 router.use((req, res, next) => {
   next(createError(404, "Route not found"));

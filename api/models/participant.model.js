@@ -12,7 +12,8 @@ const participantSchema = new mongoose.Schema(
     participant: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      refPath: "participanModel",
+      //refPath: "participantModel",
+      ref: "Guest",
     },
 
     participantModel: {
@@ -60,3 +61,6 @@ const participantSchema = new mongoose.Schema(
     },
   }
 );
+
+const Participant = mongoose.model("Participant", participantSchema);
+module.exports = Participant;

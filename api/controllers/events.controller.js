@@ -37,6 +37,17 @@ module.exports.list = (req, res, next) => {
     .sort({ [sort]: "desc" })
     .limit(limit)
     .skip(limit * page)
+    .populate({
+      path: "Attendance",
+      populate: {
+        path: "participant",
+        select: "name companyName",
+      },
+    })
     .then((events) => res.json(events))
     .catch((error) => next(error));
+};
+
+module.exports.detail = (req, res, next) => {
+  res.json(req.event);
 };

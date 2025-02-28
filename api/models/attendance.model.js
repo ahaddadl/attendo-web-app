@@ -10,17 +10,23 @@ const attendanceSchema = new mongoose.Schema(
 
     participant: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Participant",
       required: true,
+      refPath: "participantModel",
     },
-
-    checkedIn: {
-      type: Boolean,
-      default: false,
+    participantModel: {
+      type: String,
+      required: true,
+      enum: ["Guest", "User"],
     },
-
     checkInTime: {
       type: Date,
+    },
+    status: {
+      type: String,
+      lowercase: true,
+      trim: true,
+      enum: ["registered", "confirmed", "attended"],
+      default: "registered",
     },
   },
   {
@@ -37,4 +43,5 @@ const attendanceSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Attendance", attendanceSchema);
+const Attendance = mongoose.model("Attendance", attendanceSchema);
+module.exports = Attendance;

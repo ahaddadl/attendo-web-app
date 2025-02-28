@@ -99,5 +99,12 @@ const eventSchema = new mongoose.Schema(
   }
 );
 
+eventSchema.virtual("Attendance", {
+  ref: "Attendance",
+  localField: "_id",
+  foreignField: "event",
+  justOne: false,
+});
+
 const Event = mongoose.model("Event", eventSchema);
 module.exports = Event;
