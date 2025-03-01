@@ -9,7 +9,16 @@ module.exports.create = (req, res, next) => {
 };
 
 module.exports.list = (req, res, next) => {
-  const { limit = 5, page = 0, sort = "startDate", city, title } = req.query;
+  const {
+    limit = 5,
+    page = 0,
+    sort = "startDate",
+    order,
+    city,
+    title,
+    category,
+    date,
+  } = req.query;
 
   if (Number.isNaN(Number(limit)) || Number(limit) <= 0) {
     return next(
@@ -30,15 +39,26 @@ module.exports.list = (req, res, next) => {
 
   const criterial = {};
 
-  if (city) criterial["address.city"] = city;
+  if (city) criterial["address.city"] = new RegExp(city, "i");
+  if (category) criterial["categories"] = new RegExp(category, "i");
   if (title) criterial.title = new RegExp(title, "i");
 
+  const baseDate = date ? new Date(date) : new Date();
+  if (isNaN(baseDate)) {
+    return next(createError(400, "Invalid date format"));
+  }
+
+  criterial.startDate = { $gte: baseDate };
+
+  const sortOrder = order && order.toLowerCase() === "desc" ? "desc" : "asc";
+
   Event.find(criterial)
-    .sort({ [sort]: "desc" })
+    .sort({ [sort]: sortOrder })
     .limit(limit)
     .skip(limit * page)
     .populate({
       path: "Attendance",
+      select: "status checkInTime",
       populate: {
         path: "participant",
         select: "name companyName",
