@@ -57,7 +57,7 @@ module.exports.list = (req, res, next) => {
     .limit(limit)
     .skip(limit * page)
     .populate({
-      path: "Attendance",
+      path: "attendances",
       select: "status checkInTime",
       populate: {
         path: "participant",

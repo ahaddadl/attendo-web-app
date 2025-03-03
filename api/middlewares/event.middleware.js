@@ -4,7 +4,7 @@ const createError = require("http-errors");
 module.exports.loadEvent = (req, res, next, eventId) => {
   Event.findById(eventId)
     .populate({
-      path: "Attendance",
+      path: "attendances",
       populate: {
         path: "participant",
         select: "name companyName",

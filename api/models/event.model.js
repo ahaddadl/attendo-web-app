@@ -99,7 +99,7 @@ const eventSchema = new mongoose.Schema(
   }
 );
 
-eventSchema.virtual("Attendance", {
+eventSchema.virtual("attendances", {
   ref: "Attendance",
   localField: "_id",
   foreignField: "event",
