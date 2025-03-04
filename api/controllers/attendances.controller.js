@@ -2,15 +2,15 @@ const createError = require("http-errors");
 const Attendance = require("../models/attendance.model");
 
 module.exports.create = (req, res, next) => {
-  const { participant } = req.body;
+  const { participant, event } = req.body;
 
-  Attendance.findOne({ participant })
-    .then((participant) => {
-      if (participant) {
+  Attendance.findOne({ participant, event })
+    .then((existingAttendance) => {
+      if (existingAttendance) {
         next(
           createError(400, {
-            message: "Participant already checked In",
-            errors: { participant: "Already exists" },
+            message: "Participant already checked in for this event",
+            errors: { participant: "Already exists for this event" },
           })
         );
       } else {
@@ -53,12 +53,7 @@ module.exports.update = (req, res, next) => {
 };
 
 module.exports.list = (req, res, next) => {
-  const {
-    limit = 10,
-    page = 0,
-    sort = "name",
-    companyName,
-  } = req.query;
+  const { limit = 10, page = 0, sort = "name", companyName } = req.query;
 
   if (Number.isNaN(Number(limit)) || Number(limit) <= 0) {
     return next(

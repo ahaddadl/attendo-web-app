@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { HomePage, LoginPage, RegisterPage } from "./pages";
+import { HomePage, LoginPage, RegisterPage, EventAttendance } from "./pages";
 import PrivateRoute from "./guards/private-route";
 
 function App() {
@@ -14,6 +14,7 @@ function App() {
             </PrivateRoute>
           }
         ></Route>
+        <Route path="/events/:eventId" element={<EventAttendance />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
       </Routes>

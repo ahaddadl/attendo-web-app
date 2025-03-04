@@ -40,10 +40,10 @@ const login = (user) => http.post("/sessions", user);
 //   return http.get("/events", { params: { city, limit, page, lat, lng } });
 // };
 
-// const getEvent = (id) => http.get(`/events/${id}`);
+ const getEvent = (eventId) => http.get(`/events/${eventId}`);
 
 // const deleteEvent = (id) => http.delete(`/events/${id}`);
 
 // export { login, listEvents, getEvent, deleteEvent, register, profile };
 
-export { login, register, profile };
+export { login, register, profile, getEvent };
