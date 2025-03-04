@@ -4,28 +4,32 @@ import { useEffect, useState } from "react";
 import { getEvent } from "../services/api-service.js";
 import { useParams } from "react-router-dom";
 import ExpectedAttendance from "../components/events/expected-attendance/expected-attendance.jsx";
+import EventAbsents from "../components/events/event-absents/event-absents.jsx";
 
 function EventAttendance() {
   const { eventId } = useParams();
   const [attendance, setAttendance] = useState([]);
-  const [eventName, setEventName] = useState();
+  const [event, setEvent] = useState(null);
 
   useEffect(() => {
     getEvent(eventId)
       .then((event) => {
         console.log("Event attendance: ", event);
         setAttendance(event.attendances);
-        setEventName(event.title);
+        setEvent(event);
       })
       .catch((err) => {
         console.error(err.message);
       });
-  }, [eventId, eventName]);
+  }, [eventId]);
 
   return (
     <PageLayout>
-      <ExpectedAttendance  attendance={attendance}/>
-      <EventTable attendance={attendance} eventName={eventName} />
+      <div className="d-flex ">
+        <ExpectedAttendance attendance={attendance} />
+        <EventAbsents attendance={attendance} />
+      </div>
+      <EventTable attendance={attendance} event={event} />
     </PageLayout>
   );
 }

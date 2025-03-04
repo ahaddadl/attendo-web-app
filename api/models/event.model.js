@@ -47,7 +47,7 @@ const eventSchema = new mongoose.Schema(
         _id: false,
         city: {
           type: String,
-          lowercase: true,
+          lowercase: false,
           required: [true, "City is required giving an address"],
         },
         street: {
