@@ -40,7 +40,7 @@ module.exports.list = (req, res, next) => {
   const criterial = {};
 
   if (city) criterial["address.city"] = new RegExp(city, "i");
-  if (category) criterial["categories"] = new RegExp(category, "i");
+  if (category) criterial["categories"] = {$in: new RegExp(category, "i")};
   if (title) criterial.title = new RegExp(title, "i");
 
   const baseDate = date ? new Date(date) : new Date();

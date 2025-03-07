@@ -24,26 +24,27 @@ const register = (user) => http.post("/users", user);
 
 const login = (user) => http.post("/sessions", user);
 
-// const listEvents = ({ city, limit, page, lat, lng }) => {
-//   limit = Number.isNaN(Number(limit)) || Number(limit) <= 0 ? 1 : limit;
-//   page = Number.isNaN(Number(page)) || Number(page) <= 0 ? undefined : page;
+const listEvents = ({ city, title, category, date, limit, page }) => {
+  limit = Number.isNaN(Number(limit)) || Number(limit) <= 0 ? 1 : limit;
+  page = Number.isNaN(Number(page)) || Number(page) <= 0 ? undefined : page;
 
-//   lat =
-//     Number.isNaN(Number(lat)) || !(Number(lat) >= -90 && Number(lat) <= 90)
-//       ? undefined
-//       : lat;
-//   lng =
-//     Number.isNaN(Number(lng)) || !(Number(lng) >= -180 && Number(lng) <= 180)
-//       ? undefined
-//       : lng;
+  const params = {};
 
-//   return http.get("/events", { params: { city, limit, page, lat, lng } });
-// };
+  if (city) params.city = city;
+  if (title) params.title = title;
+  if (category) params.category = category;
+  if (date) params.date = date;
+  params.limit = limit;
+  params.page = page;
 
- const getEvent = (eventId) => http.get(`/events/${eventId}`);
+  console.log("Parametros: ", params);
+  return http.get("/events", { params });
+};
+
+const getEvent = (eventId) => http.get(`/events/${eventId}`);
 
 // const deleteEvent = (id) => http.delete(`/events/${id}`);
 
 // export { login, listEvents, getEvent, deleteEvent, register, profile };
 
-export { login, register, profile, getEvent };
+export { login, register, profile, getEvent, listEvents };
