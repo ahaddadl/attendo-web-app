@@ -15,7 +15,8 @@ function EventTable({ attendance, event}) {
       <h6>City: {event.address.city}</h6>
       <h6>Start Date: {new Date(event.startDate).toLocaleString()}</h6>
       <h6>End Date: {new Date(event.endDate).toLocaleString()}</h6>
-      <table className="table">
+      <h6 >Event Id: <span className="text-primary">{event.id}</span></h6>
+      <table className="table mt-4">
         <thead>
           <tr>
             <th scope="col">Participant Id</th>
