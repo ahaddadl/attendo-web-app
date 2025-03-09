@@ -28,6 +28,10 @@ const attendanceSchema = new mongoose.Schema(
       enum: ["registered", "confirmed", "attended"],
       default: "registered",
     },
+    checkInToken: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,

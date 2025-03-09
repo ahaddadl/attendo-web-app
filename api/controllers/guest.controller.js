@@ -64,8 +64,18 @@ module.exports.update = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.profile = (req, res, next) => {
-  res.json(req.guest);
+module.exports.profile = async (req, res, next) => {
+  try {
+    // Populate the attendedEvents virtual field,
+    // and optionally populate event details inside each attendance record.
+    const guest = await req.guest.populate({
+      path: "attendedEvents",
+      populate: { path: "event", select: "title startDate endDate address" }
+    });
+    res.json(guest);
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports.list = (req, res, next) => {
@@ -108,6 +118,7 @@ module.exports.list = (req, res, next) => {
     .sort({ [sort]: "asc" })
     .limit(limit)
     .skip(limit * page)
+    .populate("attendedEvents")
     .then((guest) => res.json(guest))
     .catch((error) => next(error));
 };

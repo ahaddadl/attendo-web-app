@@ -24,6 +24,7 @@ function EventTable({ attendance, event}) {
             <th scope="col">Company</th>
             <th scope="col">Status</th>
             <th scope="col">Check-in Time</th>
+            <th scope="col">Attendance Id</th>
           </tr>
         </thead>
         <tbody>

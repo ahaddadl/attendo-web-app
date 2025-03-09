@@ -61,4 +61,11 @@ const guestSchema = new mongoose.Schema(
   }
 );
 
+guestSchema.virtual("attendedEvents", {
+  ref: "Attendance", // The Attendance model
+  localField: "_id", // Guest's _id
+  foreignField: "participant", // The field in Attendance that stores the guest's id
+  justOne: false,
+});
+
 module.exports = mongoose.model("Guest", guestSchema);

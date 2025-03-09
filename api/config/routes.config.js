@@ -10,7 +10,6 @@ const eventMiddleware = require("../middlewares/event.middleware");
 
 const users = require("../controllers/users.controller");
 const guest = require("../controllers/guest.controller");
-////const participants = require("../controllers/participants.controller")
 const attendances = require("../controllers/attendances.controller")
 const sessions = require("../controllers/sessions.controller");
 const events = require("../controllers/events.controller");
@@ -47,6 +46,7 @@ router.param("attendanceId", attendanceMiddleware.loadAttendance)
 
 router.post("/attendances", attendances.create);
 router.get("/attendances", attendances.list);
+router.get("/attendances/confirm", attendances.confirm);
 //router.get("/attendances/:attendancesId", attendances.profile);
 router.patch("/attendances/:attendanceId", attendances.update)
 // router.delete("/attendances/:id", attendances.delete)

@@ -1,5 +1,5 @@
 function EventRow({ record }) {
-  const { participant, status, checkInTime } = record;
+  const { participant, status, checkInTime, id } = record;
   const isCheckedIn = Boolean(checkInTime);
   return (
     <tr>
@@ -8,6 +8,7 @@ function EventRow({ record }) {
       <td>{participant.companyName}</td>
       <td className={isCheckedIn ? "bg-success bg-opacity-75 text-white" : ""}>{status}</td>
       <td>{checkInTime ? new Date(checkInTime).toLocaleString() : "N/A"}</td>
+      <td>{id}</td>
     </tr>
   );
 }

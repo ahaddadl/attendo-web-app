@@ -1,39 +1,49 @@
 const createError = require("http-errors");
 const Attendance = require("../models/attendance.model");
+const crypto = require("crypto");
+const QRCode = require("qrcode");
 
-module.exports.create = (req, res, next) => {
-  const { participant, event } = req.body;
+module.exports.create = async (req, res, next) => {
+  try {
+    const { participant, event } = req.body;
 
-  Attendance.findOne({ participant, event })
-    .then((existingAttendance) => {
-      if (existingAttendance) {
-        next(
-          createError(400, {
-            message: "Participant already checked in for this event",
-            errors: { participant: "Already exists for this event" },
-          })
-        );
-      } else {
-        return Attendance.create({
-          event: req.body.event,
-          participant: req.body.participant,
-          checkInTime: req.body.checkInTime,
-          participantModel: req.body.participantModel,
-          status: req.body.status,
-        }).then((participant) => {
-          // sendValidationEmail(user);
-          //req.session.userId = user._id
+    const existingAttendance = await Attendance.findOne({ participant, event });
+    if (existingAttendance) {
+      return next(
+        createError(400, {
+          message: "Participant already checked in for this event",
+          errors: { participant: "Already exists for this event" },
+        })
+      );
+    }
 
-          res.status(201).json(participant);
-        });
-      }
-    })
-    .catch((error) => next(error));
+    // Generate a unique token
+    const token = crypto.randomBytes(16).toString("hex");
+
+    // Create the attendance record with the token
+    const newAttendance = await Attendance.create({
+      event: req.body.event,
+      participant: req.body.participant,
+      checkInTime: req.body.checkInTime, // Optional: can be null initially
+      participantModel: req.body.participantModel,
+      status: req.body.status,
+      checkInToken: token,
+    });
+
+    // Generate a QR code that encodes the confirmation URL containing the token
+    const confirmUrl = `http://localhost:3000/api/v1/attendances/confirm?token=${token}`;
+    const qrCodeDataUrl = await QRCode.toDataURL(confirmUrl);
+
+    res.status(201).json({ attendance: newAttendance, qrCode: qrCodeDataUrl });
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports.update = (req, res, next) => {
   const permittedBody = {
     status: req.body.status,
+    checkInTime: req.body.checkInTime,
   };
 
   // remove undefined keys
@@ -81,4 +91,33 @@ module.exports.list = (req, res, next) => {
     .skip(limit * page)
     .then((atttendances) => res.json(atttendances))
     .catch((error) => next(error));
+};
+
+module.exports.confirm = async (req, res, next) => {
+  try {
+    const { token } = req.query;
+    if (!token) {
+      return next(createError(400, "Token is required"));
+    }
+
+    // Find the attendance record by its checkInToken
+    const attendanceRecord = await Attendance.findOne({ checkInToken: token });
+    if (!attendanceRecord) {
+      return next(createError(404, "Attendance record not found"));
+    }
+
+    // Update attendance status and checkInTime (if not already set)
+    attendanceRecord.status = "attended";
+    if (!attendanceRecord.checkInTime) {
+      attendanceRecord.checkInTime = new Date();
+    }
+    await attendanceRecord.save();
+
+    res.json({
+      message: "Attendance confirmed",
+      attendance: attendanceRecord,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
