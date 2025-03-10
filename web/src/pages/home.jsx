@@ -3,15 +3,11 @@ import EventFilterdList from "../components/events/event-filterd-list/event-filt
 import EventsSearchBar from "../components/events/events-search-bar/events-search-bar";
 import PageLayout from "../components/layouts/page-layout/page-layouts";
 
-
 function HomePage() {
   return (
     <PageLayout>
-    {/* <EventsSearchBar></EventsSearchBar> */}
       <h3 className="fw-light">Events</h3>
       <EventFilterdList />
-      {/* <EventList max={4} /> */}
-
     </PageLayout>
   );
 }

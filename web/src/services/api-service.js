@@ -25,7 +25,7 @@ const register = (user) => http.post("/users", user);
 const login = (user) => http.post("/sessions", user);
 
 const listEvents = ({ city, title, category, date, limit, page }) => {
-  limit = Number.isNaN(Number(limit)) || Number(limit) <= 0 ? 1 : limit;
+  limit = Number.isNaN(Number(limit)) || Number(limit) <= 0 ? 15 : limit;
   page = Number.isNaN(Number(page)) || Number(page) <= 0 ? undefined : page;
 
   const params = {};
@@ -43,8 +43,20 @@ const listEvents = ({ city, title, category, date, limit, page }) => {
 
 const getEvent = (eventId) => http.get(`/events/${eventId}`);
 
+const listParticipants = ({limit, page}) => {
+  limit = Number.isNaN(Number(limit)) || Number(limit) <= 0 ? 15 : limit;
+  page = Number.isNaN(Number(page)) || Number(page) <= 0 ? undefined : page;
+
+  const params = {};
+
+  params.limit = limit;
+  params.page = page;
+
+  return http.get("/guests", { params });
+}
+
 // const deleteEvent = (id) => http.delete(`/events/${id}`);
 
 // export { login, listEvents, getEvent, deleteEvent, register, profile };
 
-export { login, register, profile, getEvent, listEvents };
+export { login, register, profile, getEvent, listEvents, listParticipants};

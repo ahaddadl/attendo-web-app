@@ -118,7 +118,10 @@ module.exports.list = (req, res, next) => {
     .sort({ [sort]: "asc" })
     .limit(limit)
     .skip(limit * page)
-    .populate("attendedEvents")
+    .populate({
+      path: "attendedEvents",
+      populate: { path: "event", select: "title startDate endDate address" }
+    })
     .then((guest) => res.json(guest))
     .catch((error) => next(error));
 };

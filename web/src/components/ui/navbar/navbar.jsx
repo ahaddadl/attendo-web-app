@@ -27,6 +27,11 @@ function NavBar() {
                 Home
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link active" aria-current="page" to="/participants">
+                Participants
+              </Link>
+            </li>
             {user?.role === "admin" && (
               <li className="nav-item">
                 <Link
