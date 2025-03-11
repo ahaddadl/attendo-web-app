@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
+
 function EventRow({ record }) {
   const { participant, status, checkInTime, id } = record;
   const isCheckedIn = Boolean(checkInTime);
   return (
     <tr>
-      <td>{participant.id}</td>
+      <td> <Link to={`/participants/${participant.id}`}>{participant.id}</Link></td>
       <td>{participant.name}</td>
       <td>{participant.companyName}</td>
       <td className={isCheckedIn ? "bg-success bg-opacity-75 text-white" : ""}>{status}</td>
@@ -14,3 +16,4 @@ function EventRow({ record }) {
 }
 
 export default EventRow;
+

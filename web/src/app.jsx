@@ -9,6 +9,7 @@ import {
 } from "./pages";
 import PrivateRoute from "./guards/private-route";
 import NavBar from "./components/ui/navbar/navbar";
+import ParticipantProfile from "./components/participants/participant-profile";
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
         <Route path="/participants" element={<Participants />} />
         <Route
           path="/participants/:participantId"
-          element={<ParticipantDetail />}
+          element={<ParticipantProfile />}
         />
       </Routes>
     </>

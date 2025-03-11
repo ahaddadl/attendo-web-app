@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function ParticipantsEventsTable({ participants }) {
   return (
@@ -14,7 +15,7 @@ function ParticipantsEventsTable({ participants }) {
       <tbody>
         {participants.map((participant) => (
           <tr key={participant.id}>
-            <td>{participant.id}</td>
+            <td><Link to={`/participants/${participant.id}`}>{participant.id}</Link></td>
             <td>{participant.name}</td>
             <td>{participant.companyName}</td>
             <td>
