@@ -47,7 +47,7 @@ router.param("attendanceId", attendanceMiddleware.loadAttendance)
 router.post("/attendances", attendances.create);
 router.get("/attendances", attendances.list);
 router.get("/attendances/confirm", attendances.confirm);
-//router.get("/attendances/:attendancesId", attendances.profile);
+router.get("/attendances/:attendanceId", attendances.detail);
 router.patch("/attendances/:attendanceId", attendances.update)
 // router.delete("/attendances/:id", attendances.delete)
 

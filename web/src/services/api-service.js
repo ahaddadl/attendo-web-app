@@ -58,6 +58,12 @@ const listParticipants = ({ limit, page }) => {
   return http.get("/guests", { params });
 };
 
+const addParticipant = (guest) => http.post("guests/", guest);
+
+const addAttendance = (attendance) => http.post("attendances/", attendance);
+
+const attendanceDetail = (attendanceId) => http.get(`/attendances/${attendanceId}`);
+
 // const deleteEvent = (id) => http.delete(`/events/${id}`);
 
 // export { login, listEvents, getEvent, deleteEvent, register, profile };
@@ -70,4 +76,7 @@ export {
   listEvents,
   listParticipants,
   participantsProfile,
+  addParticipant,
+  addAttendance,
+  attendanceDetail
 };

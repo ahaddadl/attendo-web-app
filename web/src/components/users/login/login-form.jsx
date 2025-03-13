@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-import * as AttendoApi from "../../../services/api-service.js"
+import * as AttendoApi from "../../../services/api-service.js";
 import { useAuthContext } from "../../../contexts/auth-context.jsx";
 
 function LoginForm() {
@@ -11,6 +11,7 @@ function LoginForm() {
     formState: { errors },
     setError,
   } = useForm();
+
   const { login } = useAuthContext();
   const navigate = useNavigate();
 

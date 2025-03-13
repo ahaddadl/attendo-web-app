@@ -10,6 +10,8 @@ import {
 import PrivateRoute from "./guards/private-route";
 import NavBar from "./components/ui/navbar/navbar";
 import ParticipantProfile from "./components/participants/participant-profile";
+import AddParticipantForm from "./components/participants/participant-add-form";
+import AttendanceCard from "./components/attendance/attendance-card";
 
 function App() {
   return (
@@ -32,6 +34,8 @@ function App() {
           path="/participants/:participantId"
           element={<ParticipantProfile />}
         />
+         <Route path="/events/:eventId/add-participant" element={<AddParticipantForm />} />
+         <Route path="/attendances/:attendanceId/" element={<AttendanceCard />} />
       </Routes>
     </>
   );

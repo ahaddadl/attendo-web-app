@@ -10,7 +10,7 @@ function EventRow({ record }) {
       <td>{participant.companyName}</td>
       <td className={isCheckedIn ? "bg-success bg-opacity-75 text-white" : ""}>{status}</td>
       <td>{checkInTime ? new Date(checkInTime).toLocaleString() : "N/A"}</td>
-      <td>{id}</td>
+      <td><Link to={`/attendances/${id}`}>{id}</Link></td>
     </tr>
   );
 }

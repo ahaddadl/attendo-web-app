@@ -121,3 +121,7 @@ module.exports.confirm = async (req, res, next) => {
     next(error);
   }
 };
+
+module.exports.detail = (req, res, next) => {
+  res.json(req.attendance);
+};

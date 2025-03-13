@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import ExpectedAttendance from "../components/events/expected-attendance/expected-attendance.jsx";
 import EventAbsents from "../components/events/event-absents/event-absents.jsx";
 import AttendanceFilterBar from "../components/events/attendance-search-bar/attendance-search-bar.jsx";
+import ParticipantAddButton from "../components/participants/participant-add-button.jsx";
 
 function EventAttendance() {
   const { eventId } = useParams();
@@ -56,6 +57,7 @@ function EventAttendance() {
     <PageLayout>
       <div className="d-flex mt-4">
         <ExpectedAttendance attendance={attendance} />
+        <ParticipantAddButton eventId={eventId}/>  
         <EventAbsents attendance={attendance} className={'mb-5'}/>
       </div>
       <AttendanceFilterBar onFilter={setFilters}/>
