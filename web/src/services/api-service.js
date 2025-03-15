@@ -15,8 +15,6 @@ http.interceptors.response.use(
 const profile = () => http.get("/users/me");
 
 const participantsProfile = (guestId) => http.get(`/guests/${guestId}`);
-;
-
 const register = (user) => http.post("/users", user);
 // const register = (formData) =>
 //   http.post("/users", formData, {
@@ -46,6 +44,8 @@ const listEvents = ({ city, title, category, date, limit, page }) => {
 
 const getEvent = (eventId) => http.get(`/events/${eventId}`);
 
+const addEvent = (event) => http.post("/events", event);
+
 const listParticipants = ({ limit, page }) => {
   limit = Number.isNaN(Number(limit)) || Number(limit) <= 0 ? 15 : limit;
   page = Number.isNaN(Number(page)) || Number(page) <= 0 ? undefined : page;
@@ -59,10 +59,14 @@ const listParticipants = ({ limit, page }) => {
 };
 
 const addParticipant = (guest) => http.post("guests/", guest);
+const updateParticipant = (guestId, guest) => http.patch(`/guests/${guestId}`, guest);
 
 const addAttendance = (attendance) => http.post("attendances/", attendance);
 
-const attendanceDetail = (attendanceId) => http.get(`/attendances/${attendanceId}`);
+const attendanceDetail = (attendanceId) =>
+  http.get(`/attendances/${attendanceId}`);
+
+const attendanceUpdate = (attendanceId, attendance) => http.patch(`/attendances/${attendanceId}`, attendance);
 
 // const deleteEvent = (id) => http.delete(`/events/${id}`);
 
@@ -73,10 +77,13 @@ export {
   register,
   profile,
   getEvent,
+  addEvent,
   listEvents,
   listParticipants,
   participantsProfile,
   addParticipant,
   addAttendance,
-  attendanceDetail
+  attendanceDetail,
+  attendanceUpdate,
+  updateParticipant,
 };
