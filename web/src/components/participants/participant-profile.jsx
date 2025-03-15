@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PageLayout from "../layouts/page-layout/page-layouts.jsx";
 import { participantsProfile, updateParticipant } from "../../services/api-service.js";
+import dayjs from "dayjs";
 
 function ParticipantProfile() {
   const { participantId } = useParams();
@@ -24,7 +25,7 @@ function ParticipantProfile() {
             nie: data.nie || "",
             passport: data.passport || "",
             gender: data.gender || "other",
-            observation: data.observation || ""
+            observation: data.observation || "",
           });
           setLoading(false);
         })
@@ -38,7 +39,7 @@ function ParticipantProfile() {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -72,10 +73,10 @@ function ParticipantProfile() {
   return (
     <PageLayout>
       <div className="card mb-3">
-        <div className="card-header">
+        <div className="card-header d-flex justify-content-between align-items-center">
           {editMode ? "Edit Participant" : "Participant Profile"}
           <button
-            className="btn btn-sm btn-secondary float-end"
+            className="btn btn-sm btn-secondary"
             onClick={() => setEditMode(!editMode)}
           >
             {editMode ? "Cancel" : "Edit"}
@@ -195,6 +196,43 @@ function ParticipantProfile() {
           )}
         </div>
       </div>
+      
+      {/* Attended events table */}
+      {participant.attendedEvents && participant.attendedEvents.length > 0 && (
+        <div className="card mb-3">
+          <div className="card-header">
+            <h5 className="mb-0">Attended Events</h5>
+          </div>
+          <div className="card-body">
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">No.</th>
+                  <th scope="col">Event Title</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">City</th>
+                  <th scope="col">Start Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {participant.attendedEvents.map((attendance, index) => (
+                  <tr key={attendance.id}>
+                    <td>{index + 1}</td>
+                    <td>{attendance.event?.title || "Unknown Event"}</td>
+                    <td>{attendance.status}</td>
+                    <td>{attendance.event?.address?.city || "N/A"}</td>
+                    <td>
+                      {attendance.event?.startDate
+                        ? dayjs(attendance.event.startDate).format("MMM D, YYYY h:mm A")
+                        : "N/A"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </PageLayout>
   );
 }

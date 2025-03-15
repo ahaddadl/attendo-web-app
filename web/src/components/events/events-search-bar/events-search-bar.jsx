@@ -13,51 +13,57 @@ function EventsSearchBar({ onSearch }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-3">
-      <div className="row g-2">
-        <div className="col">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="City"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-          />
+    <div className="row g-2 p-4 shadow-sm mb-4"    style={{
+      backgroundColor: "#f8f9fa",
+      borderRadius: "8px",
+      border: "none",
+    }}>
+      <form onSubmit={handleSubmit} className="mb-3">
+        <div className="row g-2">
+          <div className="col">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="City"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+          </div>
+          <div className="col">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+          <div className="col">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            />
+          </div>
+          <div className="col">
+            <input
+              type="date"
+              className="form-control"
+              placeholder="Date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </div>
+          <div className="col-auto">
+            <button type="submit" className="btn btn-primary">
+              Search
+            </button>
+          </div>
         </div>
-        <div className="col">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-        <div className="col">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          />
-        </div>
-        <div className="col">
-          <input
-            type="date"
-            className="form-control"
-            placeholder="Date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-        </div>
-        <div className="col-auto">
-          <button type="submit" className="btn btn-primary">
-            Search
-          </button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 }
 

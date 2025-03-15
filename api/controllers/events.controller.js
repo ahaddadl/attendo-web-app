@@ -88,3 +88,16 @@ module.exports.update = async (req, res, next) => {
     next(error);
   }
 };
+
+module.exports.delete = async (req, res, next) => {
+  try {
+    const eventId = req.params.eventId;
+    const event = await Event.findByIdAndDelete(eventId);
+    if (!event) {
+      return next(createError(404, "Event not found"));
+    }
+    res.json(event);
+  } catch (error) {
+    next(error);
+  }
+};  

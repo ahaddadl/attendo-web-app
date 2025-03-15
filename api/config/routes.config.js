@@ -31,7 +31,8 @@ router.param("eventId", eventMiddleware.loadEvent)
 router.post("/events", events.create);
 router.get("/events", events.list);
 router.get("/events/:eventId", events.detail)
-router.patch("/events/:eventId", events.detail)
+router.patch("/events/:eventId", events.update)
+router.delete("/events/:eventId", events.delete)
 
 // Guest Routes
 router.param("guestId", guestMiddleware.loadGuest);

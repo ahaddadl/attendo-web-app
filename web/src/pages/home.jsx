@@ -6,7 +6,7 @@ import PageLayout from "../components/layouts/page-layout/page-layouts";
 function HomePage() {
   return (
     <PageLayout>
-      <h3 className="fw-light">Events</h3>
+      <h3 className="fw-light mb-4"><span className="text-primary fw-bold">Vocento</span> events</h3>
       <EventFilterdList />
     </PageLayout>
   );

@@ -24,22 +24,22 @@ function NavBar() {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link className="nav-link active" aria-current="page" to="/">
-                Events
+              <i className="fa fa-calendar me-1"></i> Events
               </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link active" aria-current="page" to="/participants">
-                Participants
+              <i className="fa fa-users me-1"></i>Participants
               </Link>
             </li>
             {user?.role === "admin" && (
               <li className="nav-item">
                 <Link
-                  className="nav-link active"
+                  className="nav-link active text-primary fw-bold text-uppercase"
                   aria-current="page"
                   to="events/create-event"
                 >
-                  Create Event
+                  <i className="fa fa-plus-circle me-1"></i>New Event
                 </Link>
               </li>
             )}
@@ -54,7 +54,7 @@ function NavBar() {
                 </li>
                 <li className="nav-item">
                   <button
-                    className="nav-link btn btn-link"
+                    className="nav-link btn btn-link text-danger"
                     onClick={() => logout()}
                   >
                     Logout

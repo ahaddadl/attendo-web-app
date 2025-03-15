@@ -46,6 +46,10 @@ const getEvent = (eventId) => http.get(`/events/${eventId}`);
 
 const addEvent = (event) => http.post("/events", event);
 
+const updateEvent = (eventId, event) => http.patch(`/events/${eventId}`, event);
+
+const deleteEvent = (eventId) => http.delete(`/events/${eventId}`);
+
 const listParticipants = ({ limit, page }) => {
   limit = Number.isNaN(Number(limit)) || Number(limit) <= 0 ? 15 : limit;
   page = Number.isNaN(Number(page)) || Number(page) <= 0 ? undefined : page;
@@ -68,7 +72,7 @@ const attendanceDetail = (attendanceId) =>
 
 const attendanceUpdate = (attendanceId, attendance) => http.patch(`/attendances/${attendanceId}`, attendance);
 
-// const deleteEvent = (id) => http.delete(`/events/${id}`);
+
 
 // export { login, listEvents, getEvent, deleteEvent, register, profile };
 
@@ -78,6 +82,8 @@ export {
   profile,
   getEvent,
   addEvent,
+  updateEvent,
+  deleteEvent,
   listEvents,
   listParticipants,
   participantsProfile,

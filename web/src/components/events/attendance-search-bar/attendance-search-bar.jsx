@@ -13,7 +13,11 @@ function AttendanceFilterBar({ onFilter }) {
 
   return (
     <form onSubmit={handleSubmit} className="mb-3">
-      <div className="row g-2">
+      <div className="row g-2 p-4 shadow-sm"    style={{
+          backgroundColor: "#f8f9fa",
+          borderRadius: "8px",
+          border: "none",
+        }}>
         <div className="col">
           <input
             type="text"
