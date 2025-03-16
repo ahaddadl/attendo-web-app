@@ -6,7 +6,12 @@ function NavBar() {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container">
-        <Link className="navbar-brand" to="/">
+      <Link className="navbar-brand d-flex align-items-center" to="/">
+          <img
+            src="/attendo.svg"
+            alt="Attendo Favicon"
+            style={{ width: "32px", height: "32px", marginRight: "8px" }}
+          />
           Attendo
         </Link>
         <button

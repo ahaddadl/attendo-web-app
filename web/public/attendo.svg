@@ -1,6 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <circle cx="50" cy="50" r="45" fill="#28a745"/>
-  <text x="50" y="65" font-size="50" text-anchor="middle" fill="#ffffff" font-family="Arial" font-weight="bold">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#28a745;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#007bff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="45" fill="url(#grad)" />
+  <!-- Shift the letter A a bit to the left (x="45") -->
+  <text x="45" y="72" font-size="70" text-anchor="middle" fill="#ffffff" font-family="Arial" font-weight="bold">
     A
   </text>
+  <!-- Shifted participant icon -->
+  <circle cx="70" cy="25" r="10" fill="#ffffff" />
+  <path d="M65,40 Q70,50 75,40" fill="none" stroke="#ffffff" stroke-width="2.5"/>
 </svg>
