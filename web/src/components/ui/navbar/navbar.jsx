@@ -24,24 +24,39 @@ function NavBar() {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link className="nav-link active" aria-current="page" to="/">
-              <i className="fa fa-calendar me-1"></i> Events
+                <i className="fa fa-calendar me-1"></i> Events
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="/participants">
-              <i className="fa fa-users me-1"></i>Participants
+              <Link
+                className="nav-link active"
+                aria-current="page"
+                to="/participants"
+              >
+                <i className="fa fa-users me-1"></i>Participants
               </Link>
             </li>
             {user?.role === "admin" && (
-              <li className="nav-item">
-                <Link
-                  className="nav-link active text-primary fw-bold text-uppercase"
-                  aria-current="page"
-                  to="events/create-event"
-                >
-                  <i className="fa fa-plus-circle me-1"></i>New Event
-                </Link>
-              </li>
+              <>
+                <li className="nav-item">
+                  <Link
+                    className="nav-link active text-primary fw-bold text-uppercase"
+                    aria-current="page"
+                    to="events/create-event"
+                  >
+                    <i className="fa fa-plus-circle me-1"></i>New Event
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    className="nav-link active text-primary fw-bold text-uppercase"
+                    aria-current="page"
+                    to="/register"
+                  >
+                    <i className="fa fa-user-plus me-1"></i> Register
+                  </Link>
+                </li>
+              </>
             )}
           </ul>
           <ul className="navbar-nav">

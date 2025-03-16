@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { addParticipant, addAttendance } from "../../services/api-service";
+import AddExistingParticipantToEvent from "./Participant-add-existing-to-event";
 
 function AddParticipantForm() {
   const {
@@ -37,8 +38,10 @@ function AddParticipantForm() {
   };
 
   return (
+    <>
+    <AddExistingParticipantToEvent />
     <div className="container mt-4">
-      <h2>Add Participant</h2>
+      <h4>Add New Participant</h4>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
           <label className="form-label">Name</label>
@@ -117,6 +120,7 @@ function AddParticipantForm() {
         <button type="submit" className="btn btn-primary">Register</button>
       </form>
     </div>
+    </>
   );
 }
 

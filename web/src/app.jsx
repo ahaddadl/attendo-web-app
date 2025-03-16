@@ -27,17 +27,17 @@ function App() {
             </PrivateRoute>
           }
         ></Route>
-        <Route path="/events/:eventId" element={<EventAttendance />} />
+        <Route path="/events/:eventId" element={<PrivateRoute><EventAttendance /></PrivateRoute>} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/participants" element={<Participants />} />
+        <Route path="/register" element={<PrivateRoute><RegisterPage /></PrivateRoute>} />
+        <Route path="/participants" element={<PrivateRoute><Participants /></PrivateRoute>} />
         <Route
           path="/participants/:participantId"
-          element={<ParticipantProfile />}
+          element={<PrivateRoute><ParticipantProfile /></PrivateRoute>}
         />
-         <Route path="/events/:eventId/add-participant" element={<AddParticipantForm />} />
-         <Route path="/attendances/:attendanceId/" element={<AttendanceCard />} />
-         <Route path="events/create-event" element={<CreateEvent />} />
+         <Route path="/events/:eventId/add-participant" element={<PrivateRoute><AddParticipantForm /></PrivateRoute>} />
+         <Route path="/attendances/:attendanceId/" element={<PrivateRoute><AttendanceCard /></PrivateRoute>} />
+         <Route path="events/create-event" element={<PrivateRoute><CreateEvent /></PrivateRoute>} />
       </Routes>
     </>
   );

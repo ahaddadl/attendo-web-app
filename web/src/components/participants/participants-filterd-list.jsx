@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { listParticipants } from "../../services/api-service";
 import ParticipantsEventsTable from "./participants-events-table";
 import ParticipantEventsSearchBar from "./participants-events-search-bar";
+import PageLayout from "../layouts/page-layout/page-layouts";
 
 function ParticipantFiltered() {
   const [participants, setParticipants] = useState([]);
@@ -19,7 +20,7 @@ function ParticipantFiltered() {
 
   console.log("Participants: ", participants);
 
-  const noEventsRegex = /^(n|no(?:\s*e(?:v(?:e(?:n(?:ts?)?)?)?)?)?)\s*$/i;;
+  const noEventsRegex = /^(n|no(?:\s*e(?:v(?:e(?:n(?:ts?)?)?)?)?)?)\s*$/i;
 
   // Filter participants on the client side based on the search criteria.
   const filteredParticipants = useMemo(() => {
@@ -50,28 +51,40 @@ function ParticipantFiltered() {
                 .includes(filters.event.toLowerCase())
           ));
 
-          const matchesStatus =
-          !filters.status ||
-          (
-            participant.attendedEvents && participant.attendedEvents.length > 0
-              ? participant.attendedEvents.some(
-                  (att) =>
-                    att.status &&
-                    att.status.toLowerCase().includes(filters.status.toLowerCase())
-                )
-              : noEventsRegex.test(filters.status)
-          );
+      const matchesStatus =
+        !filters.status ||
+        (participant.attendedEvents && participant.attendedEvents.length > 0
+          ? participant.attendedEvents.some(
+              (att) =>
+                att.status &&
+                att.status.toLowerCase().includes(filters.status.toLowerCase())
+            )
+          : noEventsRegex.test(filters.status));
 
       return matchesName && matchesCompany && matchesEvent && matchesStatus;
     });
   }, [participants, filters]);
 
   return (
-    <div>
-      <h3>Participants and Their Events</h3>
-      <ParticipantEventsSearchBar onSearch={handleSearch} />
-      <ParticipantsEventsTable participants={filteredParticipants} />
-    </div>
+    <PageLayout>
+      <div className="card shadow-sm mb-4">
+        <div className="card-header">
+          <h4 className="mb-0">Search Participants</h4>
+        </div>
+        <div className="card-body">
+          <ParticipantEventsSearchBar onSearch={handleSearch} />
+        </div>
+      </div>
+
+      <div className="card shadow-sm mb-4">
+        <div className="card-header">
+          <h4 className="mb-0">Participants & Their Events</h4>
+        </div>
+        <div className="card-body">
+          <ParticipantsEventsTable participants={filteredParticipants} />
+        </div>
+      </div>
+    </PageLayout>
   );
 }
 
